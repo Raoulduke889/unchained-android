@@ -33,23 +33,23 @@ class StartFragment : UnchainedFragment() {
             {
                 when (it.peekContent()) {
                     is AuthenticationStatus.Authenticated -> {
+                        // technically this is not needed anymore
                         try {
                             val action =
                                 StartFragmentDirections.actionStartFragmentToUserProfileFragment()
                             findNavController().navigate(action)
                         } catch (e: IllegalArgumentException) {
                             Timber.e("This could have been a crash")
-                            // todo: fix this and remove this bypass
                         }
                     }
                     is AuthenticationStatus.AuthenticatedNoPremium -> {
+                        // technically this is not needed anymore
                         try {
                             val action =
                                 StartFragmentDirections.actionStartFragmentToUserProfileFragment()
                             findNavController().navigate(action)
                         } catch (e: IllegalArgumentException) {
                             Timber.e("This could have been a crash")
-                            // todo: fix this and remove this bypass
                         }
                     }
                     is AuthenticationStatus.RefreshToken -> {
