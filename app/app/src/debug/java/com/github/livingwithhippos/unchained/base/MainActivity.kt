@@ -117,8 +117,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.user_dest,
                 R.id.list_tabs_dest,
                 R.id.search_dest
-            ),
-            null
+            )
         )
 
         setupActionBarWithNavController(currentNavController, appBarConfiguration)

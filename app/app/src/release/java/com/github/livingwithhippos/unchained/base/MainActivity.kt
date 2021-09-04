@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -19,13 +18,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.github.livingwithhippos.unchained.BuildConfig
+import androidx.navigation.ui.setupWithNavController
 import com.github.livingwithhippos.unchained.R
 import com.github.livingwithhippos.unchained.data.model.AuthenticationStatus
 import com.github.livingwithhippos.unchained.data.model.UserAction
@@ -43,7 +42,6 @@ import com.github.livingwithhippos.unchained.utilities.SCHEME_HTTPS
 import com.github.livingwithhippos.unchained.utilities.SCHEME_MAGNET
 import com.github.livingwithhippos.unchained.utilities.extension.downloadFile
 import com.github.livingwithhippos.unchained.utilities.extension.observeOnce
-import com.github.livingwithhippos.unchained.utilities.extension.setupWithNavController
 import com.github.livingwithhippos.unchained.utilities.extension.showToast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +56,6 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
 
     /**************************************************************
      * ADD CHANGES MADE HERE IN THE DEBUG VERSION OF MAINACTIVITY *
@@ -117,8 +114,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.user_dest,
                 R.id.list_tabs_dest,
                 R.id.search_dest
-            ),
-            null
+            )
         )
 
         setupActionBarWithNavController(currentNavController, appBarConfiguration)
