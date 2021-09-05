@@ -12,10 +12,10 @@
         >
         <action
             android:id="@+id/action_search_dest_to_searchItemFragment"
-            app:destination="@id/searchItemFragment" />
+            app:destination="@id/search_item_dest" />
     </fragment>
     <fragment
-        android:id="@+id/searchItemFragment"
+        android:id="@+id/search_item_dest"
         android:name="com.github.livingwithhippos.unchained.search.view.SearchItemFragment"
         android:label="@string/links" >
         <argument
