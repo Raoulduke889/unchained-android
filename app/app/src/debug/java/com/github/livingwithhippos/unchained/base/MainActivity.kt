@@ -21,7 +21,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.fragment
+import androidx.navigation.navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -34,8 +37,11 @@ import com.github.livingwithhippos.unchained.data.repositoy.PluginRepository.Com
 import com.github.livingwithhippos.unchained.data.service.ForegroundTorrentService
 import com.github.livingwithhippos.unchained.data.service.ForegroundTorrentService.Companion.KEY_TORRENT_ID
 import com.github.livingwithhippos.unchained.databinding.ActivityMainBinding
+import com.github.livingwithhippos.unchained.navigation.home_nav_graph
+import com.github.livingwithhippos.unchained.navigation.nav_graph
 import com.github.livingwithhippos.unchained.settings.view.SettingsActivity
 import com.github.livingwithhippos.unchained.settings.view.SettingsFragment.Companion.KEY_TORRENT_NOTIFICATIONS
+import com.github.livingwithhippos.unchained.start.view.StartFragment
 import com.github.livingwithhippos.unchained.start.viewmodel.MainActivityViewModel
 import com.github.livingwithhippos.unchained.utilities.EitherResult
 import com.github.livingwithhippos.unchained.utilities.EventObserver
@@ -103,6 +109,34 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_host_fragment
         ) as NavHostFragment
+
+        navHostFragment.navController.apply {
+            graph = createGraph(
+                    id = nav_graph.id,
+                    startDestination = nav_graph.dest.nav_graph_home
+                ) {
+                    // label, arguments, actions, other destinations, deep links
+                    navigation(
+                        id = nav_graph.dest.nav_graph_home,
+                        startDestination = home_nav_graph.dest.start
+                    ) {
+                        fragment<StartFragment>(home_nav_graph.dest.start) {
+                            label = getString(R.string.loading)
+                            action(home_nav_graph.action.to_auth_flow) {
+                                destinationId = home_nav_graph.dest.authentication
+                            }
+                            action(home_nav_graph.action.to_user_details) {
+                                destinationId = home_nav_graph.dest.user
+                            }
+                        }
+
+                    }
+
+
+                }
+
+        }
+
         currentNavController = navHostFragment.navController
 
         // Setup the bottom navigation view with navController

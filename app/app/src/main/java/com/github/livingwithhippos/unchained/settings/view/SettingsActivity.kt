@@ -9,7 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [AppCompatActivity] subclass.
- * Used to navigate from any fragment to the settings screen since the multiple backstack navigation makes it kind of complicated.
+ * Used to navigate from any fragment to the settings screen
+ * since the multiple backstack navigation makes it kind of complicated.
  */
 @AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
