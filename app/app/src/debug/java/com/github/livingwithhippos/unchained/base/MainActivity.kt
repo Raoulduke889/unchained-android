@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
@@ -31,18 +32,29 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.github.livingwithhippos.unchained.BuildConfig
 import com.github.livingwithhippos.unchained.R
+import com.github.livingwithhippos.unchained.authentication.view.AuthenticationFragment
 import com.github.livingwithhippos.unchained.data.model.AuthenticationStatus
 import com.github.livingwithhippos.unchained.data.model.UserAction
 import com.github.livingwithhippos.unchained.data.repositoy.PluginRepository.Companion.TYPE_UNCHAINED
 import com.github.livingwithhippos.unchained.data.service.ForegroundTorrentService
 import com.github.livingwithhippos.unchained.data.service.ForegroundTorrentService.Companion.KEY_TORRENT_ID
 import com.github.livingwithhippos.unchained.databinding.ActivityMainBinding
+import com.github.livingwithhippos.unchained.downloaddetails.view.DownloadDetailsFragment
+import com.github.livingwithhippos.unchained.folderlist.view.FolderListFragment
+import com.github.livingwithhippos.unchained.lists.view.ListsTabFragment
 import com.github.livingwithhippos.unchained.navigation.home_nav_graph
+import com.github.livingwithhippos.unchained.navigation.list_nav_graph
 import com.github.livingwithhippos.unchained.navigation.nav_graph
+import com.github.livingwithhippos.unchained.navigation.search_nav_graph
+import com.github.livingwithhippos.unchained.newdownload.view.NewDownloadFragment
+import com.github.livingwithhippos.unchained.search.view.SearchFragment
+import com.github.livingwithhippos.unchained.search.view.SearchItemFragment
 import com.github.livingwithhippos.unchained.settings.view.SettingsActivity
 import com.github.livingwithhippos.unchained.settings.view.SettingsFragment.Companion.KEY_TORRENT_NOTIFICATIONS
 import com.github.livingwithhippos.unchained.start.view.StartFragment
 import com.github.livingwithhippos.unchained.start.viewmodel.MainActivityViewModel
+import com.github.livingwithhippos.unchained.torrentdetails.view.TorrentDetailsFragment
+import com.github.livingwithhippos.unchained.user.view.UserProfileFragment
 import com.github.livingwithhippos.unchained.utilities.EitherResult
 import com.github.livingwithhippos.unchained.utilities.EventObserver
 import com.github.livingwithhippos.unchained.utilities.SCHEME_HTTP
@@ -111,28 +123,59 @@ class MainActivity : AppCompatActivity() {
         ) as NavHostFragment
 
         navHostFragment.navController.apply {
-            graph = createGraph(
-                    id = nav_graph.id,
-                    startDestination = nav_graph.dest.nav_graph_home
+            graph =
+                createGraph(
+                    startDestination = nav_graph.dest.nav_graph_home,
+                    route = nav_graph.id
                 ) {
                     // label, arguments, actions, other destinations, deep links
                     navigation(
-                        id = nav_graph.dest.nav_graph_home,
-                        startDestination = home_nav_graph.dest.start
+                        startDestination = nav_graph.dest.nav_graph_home,
+                        route = home_nav_graph.id
                     ) {
                         fragment<StartFragment>(home_nav_graph.dest.start) {
                             label = getString(R.string.loading)
-                            action(home_nav_graph.action.to_auth_flow) {
-                                destinationId = home_nav_graph.dest.authentication
-                            }
-                            action(home_nav_graph.action.to_user_details) {
-                                destinationId = home_nav_graph.dest.user
-                            }
                         }
-
+                        fragment<AuthenticationFragment>(home_nav_graph.dest.authentication) {
+                            label = getString(R.string.authenticate)
+                        }
+                        fragment<UserProfileFragment>(home_nav_graph.dest.user) {
+                            label = getString(R.string.user)
+                        }
                     }
 
+                    navigation(
+                        startDestination = nav_graph.dest.nav_graph_list,
+                        route = list_nav_graph.id
+                    ) {
+                        fragment<DownloadDetailsFragment>(list_nav_graph.dest.download_details) {
+                            label = getString(R.string.details)
+                        }
+                        fragment<ListsTabFragment>(list_nav_graph.dest.lists) {
+                            label = getString(R.string.downloads)
+                        }
+                        fragment<TorrentDetailsFragment>(list_nav_graph.dest.torrent_details) {
+                            label = getString(R.string.torrent)
+                        }
+                        fragment<FolderListFragment>(list_nav_graph.dest.folder_details) {
+                            label = getString(R.string.folder)
+                        }
+                        fragment<NewDownloadFragment>(list_nav_graph.dest.new_download) {
+                            label = getString(R.string.new_download)
+                        }
+                    }
 
+                    navigation(
+                        startDestination = nav_graph.dest.nav_graph_search,
+                        route = search_nav_graph.id
+                    ) {
+                        fragment<SearchFragment>(search_nav_graph.dest.search) {
+                            label = getString(R.string.search_files)
+                        }
+                        fragment<SearchItemFragment>(search_nav_graph.dest.search_item) {
+                            label = getString(R.string.links)
+                        }
+                    }
                 }
 
         }

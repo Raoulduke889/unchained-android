@@ -4,12 +4,12 @@ import com.github.livingwithhippos.unchained.R
 
 object nav_graph {
 
-    const val id = R.id.nav_graph
+    const val id = "route"
 
     object dest {
-        const val nav_graph_home = R.id.navigation_home
-        const val nav_graph_list = R.id.navigation_lists
-        const val nav_graph_search = R.id.navigation_search
+        const val nav_graph_home = "$id/navigation_home"
+        const val nav_graph_list = "$id/navigation_lists"
+        const val nav_graph_search = "$id/navigation_search"
     }
 
     object action {
@@ -25,12 +25,12 @@ object nav_graph {
 
 object home_nav_graph {
 
-    const val id = R.id.navigation_home
+    const val id = "${nav_graph.id}/navigation_home"
 
     object dest {
-        const val start = R.id.start_dest
-        const val authentication = R.id.authentication_dest
-        const val user = R.id.user_dest
+        const val start = "$id/start_dest"
+        const val authentication = "$id/authentication_dest"
+        const val user = "$id/user_dest"
     }
 
     object action {
@@ -45,14 +45,14 @@ object home_nav_graph {
 
 object list_nav_graph {
 
-    const val id = R.id.navigation_lists
+    const val id = "${nav_graph.id}/navigation_list"
 
     object dest {
-        const val lists = R.id.list_tabs_dest
-        const val download_details = R.id.download_details_dest
-        const val torrent_details = R.id.torrent_details_dest
-        const val folder_details = R.id.folder_list_fragment
-        const val new_download = R.id.new_download_fragment
+        const val lists = "$id/list_tabs_dest"
+        const val download_details = "$id/download_details_dest"
+        const val torrent_details = "$id/torrent_details_dest"
+        const val folder_details = "$id/folder_list_fragment"
+        const val new_download = "$id/new_download_fragment"
     }
 
     object action {
@@ -72,11 +72,11 @@ object list_nav_graph {
 
 object search_nav_graph {
 
-    const val id = R.id.navigation_search
+    const val id = "${nav_graph.id}/navigation_search"
 
     object dest {
-        const val search = R.id.search_dest
-        const val search_item = R.id.search_item_dest
+        const val search = "$id/search_dest"
+        const val search_item = "$id/search_item_dest"
     }
 
     object action {
